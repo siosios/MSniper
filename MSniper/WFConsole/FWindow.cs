@@ -54,11 +54,11 @@ namespace MSniper.WFConsole
             };
             msniperServiceToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
-                Process.Start("http://msniper.com");
+                Process.Start("https://github.com/msx752/msniper-location-service");
             };
             necroBotLatestToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
-                Process.Start("https://github.com/Necrobot-Private/NecroBot/releases/latest");
+                Process.Start("https://github.com/Necrobot-Private/NecroBot");
             };
             featuresToolStripMenuItem.Click += delegate (object sender, EventArgs e)
             {
@@ -111,7 +111,13 @@ namespace MSniper.WFConsole
 
         public Process[] GetNecroBotProcesses()
         {
-            var plist = Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith(Variables.BotExeName) && !x.ProcessName.ToLower().EndsWith(".vshost")).ToArray();
+            var plist = Process.GetProcesses()
+                .Where(x => 
+                x.ProcessName.ToLower().StartsWith(Variables.BotExeName) &&
+                !x.ProcessName.ToLower().EndsWith(".vshost") &&
+                !x.ProcessName.ToLower().EndsWith(".gui") &&
+                !x.ProcessName.ToLower().EndsWith(".guı")
+                ).ToArray();
             BotCount = plist.Count();
             return plist;
         }
@@ -199,6 +205,9 @@ namespace MSniper.WFConsole
                 Config.Warning);
             Console.WriteLine(Culture.GetTranslation(TranslationString.SnipeWebsite,
                 Variables.SnipeWebsite),
+                Config.Warning);
+            Console.WriteLine(Culture.GetTranslation(TranslationString.SnipeWebsite,
+               "http://mypogosnipers.com/"),
                 Config.Warning);
             Console.Write(Culture.GetTranslation(TranslationString.CurrentVersion,
                 Assembly.GetEntryAssembly().GetName().Version.ToString()),
